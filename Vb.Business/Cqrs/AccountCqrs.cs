@@ -5,10 +5,10 @@ using Vb.Schema;
 namespace Vb.Business.Cqrs;
 
 
-public record CreateCustomerCommand(CustomerRequest Model) : IRequest<ApiResponse<CustomerResponse>>;
-public record UpdateCustomerCommand(int Id,CustomerRequest Model) : IRequest<ApiResponse>;
-public record DeleteCustomerCommand(int Id) : IRequest<ApiResponse>;
+public record CreateAccountCommand(AccountRequest Model) : IRequest<ApiResponse<AccountResponse>>;
+public record UpdateAccountCommand(int Id,AccountRequest Model) : IRequest<ApiResponse>;
+public record DeleteAccountCommand(int Id) : IRequest<ApiResponse>;
 
-public record GetAllCustomerQuery() : IRequest<ApiResponse<List<CustomerResponse>>>;
-public record GetCustomerByIdQuery(int Id) : IRequest<ApiResponse<CustomerResponse>>;
-public record GetCustomerByParameterQuery(string FirstName,string LastName,string IdentiyNumber) : IRequest<ApiResponse<List<CustomerResponse>>>;
+public record GetAllAccountQuery() : IRequest<ApiResponse<List<AccountResponse>>>;
+public record GetAccountByIdQuery(int Id) : IRequest<ApiResponse<AccountResponse>>;
+public record GetAccountByParameterQuery(string FirstName,string LastName,string IdentiyNumber) : IRequest<ApiResponse<List<AccountResponse>>>;

@@ -8,10 +8,10 @@ namespace VbApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AccountsController : ControllerBase
+public class AccountController : ControllerBase
 {
     private readonly IMediator mediator;
-    public AccountsController(IMediator mediator)
+    public AccountController(IMediator mediator)
     {
         this.mediator = mediator;
     }
