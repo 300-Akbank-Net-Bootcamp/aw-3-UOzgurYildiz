@@ -8,7 +8,7 @@ using Vb.Business.Cqrs;
 using Vb.Business.Mapper;
 using Vb.Business.Validator;
 
-namespace VbApi;
+namespace UOY_aw_3;
 
 public class Startup
 {
@@ -26,6 +26,7 @@ public class Startup
         //services.AddDbContext<VbDbContext>(options => options.UseNpgsql(connection));
         
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCustomerCommand).GetTypeInfo().Assembly));
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateAddressCommand).GetTypeInfo().Assembly));
 
         var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MapperConfig()));
         services.AddSingleton(mapperConfig.CreateMapper());
