@@ -26,7 +26,7 @@ public class EftTransactionQueryHandler :
     public async Task<ApiResponse<List<EftTransactionResponse>>> Handle(GetAllEftTransactionQuery request,
         CancellationToken cancellationToken)
     {
-        var list = await dbContext.Set<EftTransaction>();
+        var list = await dbContext.Set<EftTransaction>().ToListAsync(cancellationToken);
         
         var mappedList = mapper.Map<List<EftTransaction>, List<EftTransactionResponse>>(list);
          return new ApiResponse<List<EftTransactionResponse>>(mappedList);

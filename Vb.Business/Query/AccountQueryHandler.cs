@@ -26,7 +26,7 @@ public class AccountQueryHandler :
     public async Task<ApiResponse<List<AccountResponse>>> Handle(GetAllAccountQuery request,
         CancellationToken cancellationToken)
     {
-        var list = await dbContext.Set<Account>();
+        var list = await dbContext.Set<Account>().ToListAsync(cancellationToken);
         
         var mappedList = mapper.Map<List<Account>, List<AccountResponse>>(list);
          return new ApiResponse<List<AccountResponse>>(mappedList);
