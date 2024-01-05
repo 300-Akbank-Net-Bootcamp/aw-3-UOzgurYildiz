@@ -30,7 +30,7 @@ public class AccountTransactionCommandHandler :
             .FirstOrDefaultAsync(cancellationToken);
         if (checkIdentity != null)
         {
-            return new ApiResponse<AccountTransactionResponse>($"{request.Model.ReferenceNumber} is used by another AccountTransaction.");
+            return new ApiResponse<AccountTransactionResponse>($"{request.Model.ReferenceNumber} is used by another Account Transaction.");
         }
         
         var entity = mapper.Map<AccountTransactionRequest, AccountTransaction>(request.Model);

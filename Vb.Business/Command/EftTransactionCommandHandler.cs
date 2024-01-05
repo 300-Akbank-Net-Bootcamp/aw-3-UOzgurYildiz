@@ -26,11 +26,11 @@ public class EftTransactionCommandHandler :
 
     public async Task<ApiResponse<EftTransactionResponse>> Handle(CreateEftTransactionCommand request, CancellationToken cancellationToken)
     {
-        var checkIdentity = await dbContext.Set<EftTransaction>().Where(x => x.AccountId == request.Model.AccountId)
+        var checkIdentity = await dbContext.Set<EftTransaction>().Where(x => x.ReferenceNumber == request.Model.ReferenceNumber)
             .FirstOrDefaultAsync(cancellationToken);
         if (checkIdentity != null)
         {
-            return new ApiResponse<EftTransactionResponse>($"{request.Model.AccountId} is used by another EftTransaction.");
+            return new ApiResponse<EftTransactionResponse>($"{request.Model.AccountId} is used by another Eft Transaction.");
         }
         
         var entity = mapper.Map<EftTransactionRequest, EftTransaction>(request.Model);
