@@ -34,7 +34,7 @@ public class EftTransactionCommandHandler :
         }
         
         var entity = mapper.Map<EftTransactionRequest, EftTransaction>(request.Model);
-        entity.ReferenceNumber = (string) new Random().Next(1000000, 9999999);
+        
         
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);

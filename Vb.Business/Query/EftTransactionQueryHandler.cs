@@ -36,7 +36,7 @@ public class EftTransactionQueryHandler :
         CancellationToken cancellationToken)
     {
         var entity =  await dbContext.Set<EftTransaction>()
-            .FirstOrDefaultAsync(x => x.EftTransactionNumber == request.Id, cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (entity == null)
         {

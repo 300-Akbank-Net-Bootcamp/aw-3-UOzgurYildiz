@@ -36,7 +36,7 @@ public class AccountTransactionQueryHandler :
         CancellationToken cancellationToken)
     {
         var entity =  await dbContext.Set<AccountTransaction>()
-            .FirstOrDefaultAsync(x => x.AccountTransactionNumber == request.Id, cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (entity == null)
         {

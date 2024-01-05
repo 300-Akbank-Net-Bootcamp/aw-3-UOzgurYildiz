@@ -34,7 +34,6 @@ public class ContactCommandHandler :
         }
         
         var entity = mapper.Map<ContactRequest, Contact>(request.Model);
-        entity.ContactNumber = new Random().Next(1000000, 9999999);
         
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);

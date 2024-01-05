@@ -34,7 +34,6 @@ public class AccountTransactionCommandHandler :
         }
         
         var entity = mapper.Map<AccountTransactionRequest, AccountTransaction>(request.Model);
-        entity.ReferenceNumber = (string) new Random().Next(1000000, 9999999);
         
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
@@ -45,7 +44,7 @@ public class AccountTransactionCommandHandler :
 
     public async Task<ApiResponse> Handle(UpdateAccountTransactionCommand request, CancellationToken cancellationToken)
     {
-        var fromdb = await dbContext.Set<AccountTransaction>().Where(x => x.ReferenceNumber == request.ReferenceNumber)
+        var fromdb = await dbContext.Set<AccountTransaction>().Where(x => x.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
         if (fromdb == null)
         {
@@ -59,7 +58,7 @@ public class AccountTransactionCommandHandler :
 
     public async Task<ApiResponse> Handle(DeleteAccountTransactionCommand request, CancellationToken cancellationToken)
     {
-        var fromdb = await dbContext.Set<AccountTransaction>().Where(x => x.ReferenceNumber == request.ReferenceNumber)
+        var fromdb = await dbContext.Set<AccountTransaction>().Where(x => x.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
         
         if (fromdb == null)
