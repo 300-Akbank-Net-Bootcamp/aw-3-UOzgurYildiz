@@ -52,8 +52,7 @@ public class ContactQueryHandler :
     {
         var list =  await dbContext.Set<Contact>()
             .Where(x =>
-            x.CustomerName.ToUpper().Contains(request.CustomerName.ToUpper()) ||
-            x.CustomerId.Contains(request.CustomerId)
+            x.CustomerName.ToUpper().Contains(request.CustomerName.ToUpper())
         ).ToListAsync(cancellationToken);
         
         var mappedList = mapper.Map<List<Contact>, List<ContactResponse>>(list);

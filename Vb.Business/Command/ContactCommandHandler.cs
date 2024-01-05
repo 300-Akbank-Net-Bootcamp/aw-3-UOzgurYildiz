@@ -26,11 +26,11 @@ public class ContactCommandHandler :
 
     public async Task<ApiResponse<ContactResponse>> Handle(CreateContactCommand request, CancellationToken cancellationToken)
     {
-        var checkIdentity = await dbContext.Set<Contact>().Where(x => x.IdentityNumber == request.Model.IdentityNumber)
+        var checkIdentity = await dbContext.Set<Contact>().Where(x => x.Id == request.Model.Id)
             .FirstOrDefaultAsync(cancellationToken);
         if (checkIdentity != null)
         {
-            return new ApiResponse<ContactResponse>($"{request.Model.IdentityNumber} is used by another Contact.");
+            return new ApiResponse<ContactResponse>($"{request.Model.Id} is used by another Contact.");
         }
         
         var entity = mapper.Map<ContactRequest, Contact>(request.Model);
@@ -45,15 +45,13 @@ public class ContactCommandHandler :
 
     public async Task<ApiResponse> Handle(UpdateContactCommand request, CancellationToken cancellationToken)
     {
-        var fromdb = await dbContext.Set<Contact>().Where(x => x.ContactNumber == request.Id)
+        var fromdb = await dbContext.Set<Contact>().Where(x => x.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
         if (fromdb == null)
         {
             return new ApiResponse("Record not found");
         }
         
-        fromdb.FirstName = request.Model.FirstName;
-        fromdb.LastName = request.Model.LastName;
         
         await dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();
@@ -61,7 +59,7 @@ public class ContactCommandHandler :
 
     public async Task<ApiResponse> Handle(DeleteContactCommand request, CancellationToken cancellationToken)
     {
-        var fromdb = await dbContext.Set<Contact>().Where(x => x.ContactNumber == request.Id)
+        var fromdb = await dbContext.Set<Contact>().Where(x => x.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
         
         if (fromdb == null)

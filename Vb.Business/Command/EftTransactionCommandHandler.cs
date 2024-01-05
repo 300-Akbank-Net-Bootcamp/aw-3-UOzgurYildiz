@@ -26,15 +26,15 @@ public class EftTransactionCommandHandler :
 
     public async Task<ApiResponse<EftTransactionResponse>> Handle(CreateEftTransactionCommand request, CancellationToken cancellationToken)
     {
-        var checkIdentity = await dbContext.Set<EftTransaction>().Where(x => x.IdentityNumber == request.Model.IdentityNumber)
+        var checkIdentity = await dbContext.Set<EftTransaction>().Where(x => x.AccountId == request.Model.AccountId)
             .FirstOrDefaultAsync(cancellationToken);
         if (checkIdentity != null)
         {
-            return new ApiResponse<EftTransactionResponse>($"{request.Model.IdentityNumber} is used by another EftTransaction.");
+            return new ApiResponse<EftTransactionResponse>($"{request.Model.AccountId} is used by another EftTransaction.");
         }
         
         var entity = mapper.Map<EftTransactionRequest, EftTransaction>(request.Model);
-        entity.EftTransactionNumber = new Random().Next(1000000, 9999999);
+        entity.ReferenceNumber = (string) new Random().Next(1000000, 9999999);
         
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
@@ -45,15 +45,13 @@ public class EftTransactionCommandHandler :
 
     public async Task<ApiResponse> Handle(UpdateEftTransactionCommand request, CancellationToken cancellationToken)
     {
-        var fromdb = await dbContext.Set<EftTransaction>().Where(x => x.EftTransactionNumber == request.Id)
+        var fromdb = await dbContext.Set<EftTransaction>().Where(x => x.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
         if (fromdb == null)
         {
             return new ApiResponse("Record not found");
         }
         
-        fromdb.FirstName = request.Model.FirstName;
-        fromdb.LastName = request.Model.LastName;
         
         await dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();
@@ -61,7 +59,7 @@ public class EftTransactionCommandHandler :
 
     public async Task<ApiResponse> Handle(DeleteEftTransactionCommand request, CancellationToken cancellationToken)
     {
-        var fromdb = await dbContext.Set<EftTransaction>().Where(x => x.EftTransactionNumber == request.Id)
+        var fromdb = await dbContext.Set<EftTransaction>().Where(x => x.Id == request.Id)
             .FirstOrDefaultAsync(cancellationToken);
         
         if (fromdb == null)

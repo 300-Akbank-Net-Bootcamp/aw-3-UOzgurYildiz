@@ -52,9 +52,8 @@ public class AccountQueryHandler :
     {
         var list =  await dbContext.Set<Account>()
             .Where(x =>
-            x.FirstName.ToUpper().Contains(request.FirstName.ToUpper()) ||
-            x.LastName.ToUpper().Contains(request.LastName.ToUpper()) ||
-            x.IdentityNumber.ToUpper().Contains(request.IdentiyNumber.ToUpper())
+            x.IBAN.ToUpper().Contains(request.IBAN.ToUpper()) ||
+            (x.CustomerId == request.CustomerId)
         ).ToListAsync(cancellationToken);
         
         var mappedList = mapper.Map<List<Account>, List<AccountResponse>>(list);

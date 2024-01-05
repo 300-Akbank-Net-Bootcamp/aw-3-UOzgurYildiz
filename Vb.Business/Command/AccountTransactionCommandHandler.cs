@@ -34,7 +34,7 @@ public class AccountTransactionCommandHandler :
         }
         
         var entity = mapper.Map<AccountTransactionRequest, AccountTransaction>(request.Model);
-        entity.AccountTransactionNumber = new Random().Next(1000000, 9999999);
+        entity.ReferenceNumber = (string) new Random().Next(1000000, 9999999);
         
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
@@ -52,8 +52,6 @@ public class AccountTransactionCommandHandler :
             return new ApiResponse("Record not found");
         }
         
-        fromdb.FirstName = request.Model.FirstName;
-        fromdb.LastName = request.Model.LastName;
         
         await dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();

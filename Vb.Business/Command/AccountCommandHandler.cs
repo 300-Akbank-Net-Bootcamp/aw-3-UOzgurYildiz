@@ -52,8 +52,6 @@ public class AccountCommandHandler :
             return new ApiResponse("Record not found");
         }
         
-        fromdb.FirstName = request.Model.FirstName;
-        fromdb.LastName = request.Model.LastName;
         
         await dbContext.SaveChangesAsync(cancellationToken);
         return new ApiResponse();

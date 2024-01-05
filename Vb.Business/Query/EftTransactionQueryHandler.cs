@@ -52,9 +52,7 @@ public class EftTransactionQueryHandler :
     {
         var list =  await dbContext.Set<EftTransaction>()
             .Where(x =>
-            x.FirstName.ToUpper().Contains(request.FirstName.ToUpper()) ||
-            x.LastName.ToUpper().Contains(request.LastName.ToUpper()) ||
-            x.IdentityNumber.ToUpper().Contains(request.IdentiyNumber.ToUpper())
+            x.ReferenceNumber.ToUpper().Contains(request.ReferenceNumber.ToUpper())
         ).ToListAsync(cancellationToken);
         
         var mappedList = mapper.Map<List<EftTransaction>, List<EftTransactionResponse>>(list);
