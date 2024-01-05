@@ -4,7 +4,7 @@ using Vb.Base.Response;
 using Vb.Business.Cqrs;
 using Vb.Schema;
 
-namespace VbApi.Controllers;
+namespace UOY_aw_3.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

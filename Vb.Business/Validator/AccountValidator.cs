@@ -7,11 +7,12 @@ public class CreateAccountValidator : AbstractValidator<AccountRequest>
 {
     public CreateAccountValidator()
     {
-        RuleFor(x => x.FirstName).NotEmpty().MaximumLength(50);
-        RuleFor(x => x.LastName).NotEmpty().MaximumLength(50);
-        RuleFor(x => x.IdentityNumber).NotEmpty().MaximumLength(11).WithName("Account tax or identity number");
-        RuleFor(x => x.DateOfBirth).NotEmpty();
-
-        RuleForEach(x => x.Addresses).SetValidator(new CreateAddressValidator());
+        RuleFor(x => x.CustomerId).NotEmpty();
+        RuleFor(x => x.AccountNumber).NotEmpty();
+        RuleFor(x => x.IBAN).NotEmpty().MaximumLength(34);
+        RuleFor(x => x.Balance).NotEmpty().PrecisionScale(18,4,false);
+        RuleFor(x => x.CurrencyType).NotEmpty().MaximumLength(3);
+        RuleFor(x => x.OpenDate).NotEmpty();
+        
     }
 }

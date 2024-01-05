@@ -26,11 +26,11 @@ public class AccountTransactionCommandHandler :
 
     public async Task<ApiResponse<AccountTransactionResponse>> Handle(CreateAccountTransactionCommand request, CancellationToken cancellationToken)
     {
-        var checkIdentity = await dbContext.Set<AccountTransaction>().Where(x => x.IdentityNumber == request.Model.IdentityNumber)
+        var checkIdentity = await dbContext.Set<AccountTransaction>().Where(x => x.ReferenceNumber == request.Model.ReferenceNumber)
             .FirstOrDefaultAsync(cancellationToken);
         if (checkIdentity != null)
         {
-            return new ApiResponse<AccountTransactionResponse>($"{request.Model.IdentityNumber} is used by another AccountTransaction.");
+            return new ApiResponse<AccountTransactionResponse>($"{request.Model.ReferenceNumber} is used by another AccountTransaction.");
         }
         
         var entity = mapper.Map<AccountTransactionRequest, AccountTransaction>(request.Model);
@@ -45,7 +45,7 @@ public class AccountTransactionCommandHandler :
 
     public async Task<ApiResponse> Handle(UpdateAccountTransactionCommand request, CancellationToken cancellationToken)
     {
-        var fromdb = await dbContext.Set<AccountTransaction>().Where(x => x.AccountTransactionNumber == request.Id)
+        var fromdb = await dbContext.Set<AccountTransaction>().Where(x => x.ReferenceNumber == request.ReferenceNumber)
             .FirstOrDefaultAsync(cancellationToken);
         if (fromdb == null)
         {
@@ -61,7 +61,7 @@ public class AccountTransactionCommandHandler :
 
     public async Task<ApiResponse> Handle(DeleteAccountTransactionCommand request, CancellationToken cancellationToken)
     {
-        var fromdb = await dbContext.Set<AccountTransaction>().Where(x => x.AccountTransactionNumber == request.Id)
+        var fromdb = await dbContext.Set<AccountTransaction>().Where(x => x.ReferenceNumber == request.ReferenceNumber)
             .FirstOrDefaultAsync(cancellationToken);
         
         if (fromdb == null)

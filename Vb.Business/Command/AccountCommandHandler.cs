@@ -26,11 +26,11 @@ public class AccountCommandHandler :
 
     public async Task<ApiResponse<AccountResponse>> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
     {
-        var checkIdentity = await dbContext.Set<Account>().Where(x => x.IdentityNumber == request.Model.IdentityNumber)
+        var checkIdentity = await dbContext.Set<Account>().Where(x => x.AccountNumber == request.Model.AccountNumber)
             .FirstOrDefaultAsync(cancellationToken);
         if (checkIdentity != null)
         {
-            return new ApiResponse<AccountResponse>($"{request.Model.IdentityNumber} is used by another Account.");
+            return new ApiResponse<AccountResponse>($"{request.Model.AccountNumber} is used by another Account.");
         }
         
         var entity = mapper.Map<AccountRequest, Account>(request.Model);
@@ -45,7 +45,7 @@ public class AccountCommandHandler :
 
     public async Task<ApiResponse> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
     {
-        var fromdb = await dbContext.Set<Account>().Where(x => x.AccountNumber == request.Id)
+        var fromdb = await dbContext.Set<Account>().Where(x => x.AccountNumber == request.AccountNumber)
             .FirstOrDefaultAsync(cancellationToken);
         if (fromdb == null)
         {
@@ -61,7 +61,7 @@ public class AccountCommandHandler :
 
     public async Task<ApiResponse> Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
     {
-        var fromdb = await dbContext.Set<Account>().Where(x => x.AccountNumber == request.Id)
+        var fromdb = await dbContext.Set<Account>().Where(x => x.AccountNumber == request.AccountNumber)
             .FirstOrDefaultAsync(cancellationToken);
         
         if (fromdb == null)

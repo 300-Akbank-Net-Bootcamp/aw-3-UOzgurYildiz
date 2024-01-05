@@ -36,7 +36,7 @@ public class ContactQueryHandler :
         CancellationToken cancellationToken)
     {
         var entity =  await dbContext.Set<Contact>()
-            .FirstOrDefaultAsync(x => x.ContactNumber == request.Id, cancellationToken);
+            .FirstOrDefaultAsync(x => x.CustomerId == request.Id, cancellationToken);
 
         if (entity == null)
         {

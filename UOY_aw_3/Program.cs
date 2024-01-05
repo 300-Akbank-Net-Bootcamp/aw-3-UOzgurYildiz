@@ -1,4 +1,4 @@
-namespace VbApi;
+namespace UOY_aw_3;
 
 public class Program
 {
