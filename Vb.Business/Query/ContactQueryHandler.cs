@@ -36,7 +36,7 @@ public class ContactQueryHandler :
         CancellationToken cancellationToken)
     {
         var entity =  await dbContext.Set<Contact>()
-            .FirstOrDefaultAsync(x => x.CustomerId == request.Id, cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
         if (entity == null)
         {
@@ -52,9 +52,8 @@ public class ContactQueryHandler :
     {
         var list =  await dbContext.Set<Contact>()
             .Where(x =>
-            x.FirstName.ToUpper().Contains(request.FirstName.ToUpper()) ||
-            x.LastName.ToUpper().Contains(request.LastName.ToUpper()) ||
-            x.IdentityNumber.ToUpper().Contains(request.IdentiyNumber.ToUpper())
+            x.CustomerName.ToUpper().Contains(request.CustomerName.ToUpper()) ||
+            x.CustomerId.Contains(request.CustomerId)
         ).ToListAsync(cancellationToken);
         
         var mappedList = mapper.Map<List<Contact>, List<ContactResponse>>(list);
